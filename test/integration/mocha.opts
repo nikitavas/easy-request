@@ -1,0 +1,5 @@
+--require ./test/integration/mocha-env.js
+--recursive ./test/integration/*.spec.js
+--timeout 10000
+--reporter mocha-multi-reporters
+--reporter-options configFile=./test/integration/config-reporters.json

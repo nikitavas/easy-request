@@ -1,0 +1,58 @@
+{
+  // Use IntelliSense to learn about possible Node.js debug attributes.
+  // Hover to view descriptions of existing attributes.
+  // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Launch server.js via nodemon",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/nodemon",
+      "program": "${workspaceRoot}/app/bootstrap.ts",
+      "outFiles": [
+        "${workspaceRoot}/app/**/*.js"
+      ],
+      "restart": true,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "Launch debug Integration",
+      "type": "node",
+      "request": "launch",
+      "runtimeArgs": [
+        "--opts",
+        "${workspaceRoot}/test/integration/mocha.opts"
+      ],
+      "runtimeExecutable": "${workspaceRoot}/node_modules/.bin/mocha",
+      "outFiles": [
+        "${workspaceRoot}/test/**/*.js"
+      ],
+      "restart": false,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "Launch debug utils script",
+      "type": "node",
+      "request": "launch",
+      "runtimeExecutable": "node --inspect-brk=9229",
+      "runtimeArgs": [
+        "./badges-gen/import-snippets.js"
+      ],
+      "restart": false,
+      "console": "integratedTerminal",
+      "internalConsoleOptions": "neverOpen",
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}
