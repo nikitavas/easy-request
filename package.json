@@ -2,6 +2,7 @@
   "name": "webapi-nodejs-skeleton",
   "version": "1.0.0",
   "description": "",
+  "main": "./app/bootstrap.js",
   "scripts": {
     "start": "node ./app/bootstrap.js",
     "lint": "./node_modules/.bin/tslint --project .",
