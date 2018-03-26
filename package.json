@@ -5,7 +5,7 @@
   "scripts": {
     "start": "node ./app/bootstrap.js",
     "lint": "./node_modules/.bin/tslint --project .",
-    "postinstall": "per-env",
+    "postinstall": "./node_modules/.bin/tsc",
     "postinstall:development": "./node_modules/.bin/tsc",
     "postinstall:production": "./node_modules/.bin/tsc",
     "postinstall:test": "./node_modules/.bin/tslint --project . && \"./node_modules/.bin/tsc\"",
