@@ -9,7 +9,7 @@
     "postinstall": "./node_modules/.bin/tsc",
     "postinstall:development": "./node_modules/.bin/tsc",
     "postinstall:production": "./node_modules/.bin/tsc",
-    "postinstall:test": "./node_modules/.bin/tslint --project . && \"./node_modules/.bin/tsc\"",
+    "postinstall:test": "./node_modules/.bin/tslint --project . && ./node_modules/.bin/tsc",
     "test": "./node_modules/.bin/mocha --opts ./test/integration/mocha.opts",
     "test:debug:w": "./node_modules/.bin/mocha --inspect-brk -w"
   },
