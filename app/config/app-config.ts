@@ -21,6 +21,8 @@ config
         PORT: 5000,
         DAAS_CORS_ORIGIN: '*',
         // Set secret keys
-        AUTHORIZATION_TOKEN_SECRET: 'secretsecretsecret'
+        AUTHORIZATION_TOKEN_SECRET: 'secretsecretsecret',
+        DATABASE_URL: `postgres://postgres:postgres@localhost:5432/interviews_mess_dev`,
+        PGSSL: false
     });
 

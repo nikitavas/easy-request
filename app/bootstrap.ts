@@ -80,9 +80,17 @@ server.setErrorConfig((application) => {
 });
 const app = server.build();
 
+
 // START THE SERVER5
 // =============================================================================
-app.listen(config.get('PORT'));
-console.warn(`app started and listening on port : ${config.get('PORT')}`);
+const startupTasks = container.get<Promise<void>[]>('startupTasks');
+console.log('performing startupTasks..');
+Promise.all(startupTasks).then(() => {
+    console.log('startupTasks success!!');
+    app.listen(config.get('PORT'));
+}).catch((error) => {
+    console.log('startupTasks failed!!');
+    console.log('Error ocurred on sequelize.sync()', error);
+});
 
 module.exports = app; // for integration testing

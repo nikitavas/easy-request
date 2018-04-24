@@ -2,9 +2,9 @@ const swaggerJSDoc = require('swagger-jsdoc');
 const swaggerDefinition = {
     'swagger': '2.0',
     info: {
-        title: 'DAAS Backend',
+        title: 'Interview mess',
         version: '1.0.0',
-        description: 'Full api for DAAS management',
+        description: 'Full api for Interview mess',
     },
     'produces': [
         'application/json'
@@ -21,6 +21,39 @@ const swaggerDefinition = {
     ],
     definitions:
         {
+            'User': {
+                'type': 'object',
+                'properties': {
+                    'email': {
+                        'type': 'string'
+                    },
+                    'first_name': {
+                        'type': 'string'
+                    },
+                    'last_name': {
+                        'type': 'string'
+                    },
+                    'about': {
+                        'type': 'string'
+                    }
+                },
+                'required': [
+                    'email',
+                    'first_name',
+                    'last_name'
+                ]
+            },
+            'Company': {
+                'type': 'object',
+                'properties': {
+                    'title': {
+                        'type': 'string'
+                    }
+                },
+                'required': [
+                    'title'
+                ]
+            },
             'Value': {
                 'type': 'object',
                 'properties': {

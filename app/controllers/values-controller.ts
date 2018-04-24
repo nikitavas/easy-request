@@ -4,7 +4,7 @@ import { controller, httpPost, requestParam, queryParam, httpGet } from 'inversi
 import * as jwt from 'express-jwt';
 import { config } from '../config/app-config';
 import { inject } from 'inversify';
-import { BaseController } from './base';
+import { BaseController } from './base-controller';
 import { transformAndValidate } from 'class-transformer-validator';
 import * as _ from 'lodash';
 import { logger } from '../common/logger';
