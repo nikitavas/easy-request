@@ -10,12 +10,16 @@ import { ExampleService } from '../services/example-service';
 import { UserRepository } from '../data.sql/user-repository';
 import { CompanyRepository } from '../data.sql/company-repository';
 import '../controllers';
+import { QuestionRepository } from '../data.sql/question-repository';
+import { AnswerRepository } from '../data.sql/answer-repository';
 
 // set up container
 export const container = new Container();
 
 container.bind<UserRepository>('UserRepository').to(UserRepository).inSingletonScope();
 container.bind<CompanyRepository>('CompanyRepository').to(CompanyRepository).inSingletonScope();
+container.bind<QuestionRepository>('QuestionRepository').to(QuestionRepository).inSingletonScope();
+container.bind<AnswerRepository>('AnswerRepository').to(AnswerRepository).inSingletonScope();
 
 container.bind<ExampleService>('ExampleService').to(ExampleService).inSingletonScope();
 
@@ -30,6 +34,9 @@ container.bind<Sequelize>('DmAdminDB').toDynamicValue(() => {
 
 container.bind('startupTasks').toDynamicValue((ctx) => {
     const ur = ctx.container.get('UserRepository');
+    const cr = ctx.container.get('CompanyRepository');
+    const qr = ctx.container.get('QuestionRepository');
+    const ar = ctx.container.get('AnswerRepository');
     return [
         ctx.container.get<Sequelize>('DmAdminDB').sync()
     ];

@@ -31,7 +31,7 @@ export class UserRepository {
     ) {
         this.models.User = this._dbConnection.import('./db.models/user');
         this.models.Company = this._dbConnection.import('./db.models/company');
-        this.models.User.belongsTo(this.models.Company, { foreignKey: 'company_id', as: 'companies' });
+        this.models.User.belongsTo(this.models.Company, { foreignKey: 'company_id', as: 'company' });
     }
     /**
      * Returns user from DB by email
@@ -115,7 +115,7 @@ export class UserRepository {
     public getUsers(): PromiseBb<Array<UserInstance>> {
 
         const includeOpts: IncludeOptions = {
-            as: 'companies',
+            as: 'company',
             model: this.models.Company,
         };
 

@@ -54,6 +54,43 @@ const swaggerDefinition = {
                     'title'
                 ]
             },
+            'Question': {
+                'type': 'object',
+                'properties': {
+                    'title': {
+                        'type': 'string'
+                    },
+                    'user_id': {
+                        'type': 'number'
+                    }
+                },
+                'required': [
+                    'title',
+                    'user_id'
+                ]
+            },
+            'Answer': {
+                'type': 'object',
+                'properties': {
+                    'body': {
+                        'type': 'string'
+                    },
+                    'user_id': {
+                        'type': 'number'
+                    },
+                    'question_id': {
+                        'type': 'number'
+                    },
+                    'rating': {
+                        'type': 'number'
+                    }
+                },
+                'required': [
+                    'body',
+                    'user_id',
+                    'question_id'
+                ]
+            },
             'Value': {
                 'type': 'object',
                 'properties': {

@@ -9,7 +9,7 @@ export default function (sequelize: Sequelize, dataTypes: DataTypes):
     SequelizeStatic.Model<UserInstance, User> {
     const Users = sequelize.define<UserInstance, User>('user', {
         id: { type: dataTypes.INTEGER, autoIncrement: true, primaryKey: true },
-        email: { type: dataTypes.STRING, allowNull: false },
+        email: { type: dataTypes.STRING, allowNull: false, validate: { isEmail: true } },
         first_name: { type: dataTypes.STRING, allowNull: false },
         last_name: { type: dataTypes.STRING },
         full_name: { type: dataTypes.STRING },

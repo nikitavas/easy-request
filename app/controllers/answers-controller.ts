@@ -5,28 +5,27 @@ import { config } from '../config/app-config';
 import { inject } from 'inversify';
 import { BaseController } from './base-controller';
 import * as _ from 'lodash';
-import { UserRepository } from '../data.sql/user-repository';
 import { transformAndValidate } from 'class-transformer-validator';
 import * as jwtTool from 'jsonwebtoken';
 import * as moment from 'moment';
-import { Company } from '../contracts/company';
-import { CompanyRepository } from '../data.sql/company-repository';
+import { Answer } from '../contracts/answer';
+import { AnswerRepository } from '../data.sql/answer-repository';
 
 
-@controller('/api/companies')
-export class CompaniesController extends BaseController {
+@controller('/api/answers')
+export class AnswersController extends BaseController {
 
     constructor(
-        @inject('CompanyRepository') private _companyRepository: CompanyRepository) {
+        @inject('AnswerRepository') private _answerRepository: AnswerRepository) {
         super();
     }
 
     /**
      * @swagger
-     * /api/companies:
+     * /api/answers:
      *   get:
-     *     summary: Get all companies
-     *     description: Get all companies
+     *     summary: Get all answers
+     *     description: Get all answers
      *     produces:
      *       - application/json
      *     parameters:
@@ -35,14 +34,14 @@ export class CompaniesController extends BaseController {
      *         required: false
      *         type: string
      *     tags:
-     *       - Companies
+     *       - Answers
      *     responses:
      *       200:
      *         description: List of users
      *
      */
     @httpGet('/')
-    public getAllCompanies(@request() req: express.Request, @response() res: express.Response) {
+    public getAllAnswers(@request() req: express.Request, @response() res: express.Response) {
         // let parameters: GetUsersRequest;
         // try {
         //     parameters = await transformAndValidate(
@@ -57,8 +56,8 @@ export class CompaniesController extends BaseController {
         // // res.set('Content-Type', 'text/plain');
         // res.write('aaaaaa');
         // res.end();// res.json({});
-        this._companyRepository.getCompanies().then(companies => {
-            res.json(companies);
+        this._answerRepository.getAnswers().then(answers => {
+            res.json(answers);
         });
     }
 
@@ -66,36 +65,36 @@ export class CompaniesController extends BaseController {
 
     /**
      * @swagger
-     * /api/companies/{companyId}:
+     * /api/answers/{answerId}:
      *   get:
-     *     summary: Get a company by ID
-     *     description: Get company by id
+     *     summary: Get a answer by ID
+     *     description: Get answer by id
      *     produces:
      *       - application/json
      *     tags:
-     *       - Companies
+     *       - Answers
      *     parameters:
-     *       - name: companyId
+     *       - name: answerId
      *         in: path
      *         required: true
      *         type: string
      *     responses:
      *       200:
-     *         description: Company
+     *         description: Answer
      *       500:
      *         description: Server error
      *
      */
-    @httpGet('/:companyId')
-    public async getCompanyById(@requestParam('companyId') companyId: string, @response() res: express.Response) {
+    @httpGet('/:answerId')
+    public async getAnswerById(@requestParam('answerId') answerId: string, @response() res: express.Response) {
         try {
-            const company = await this._companyRepository.getCompanyById(companyId);
-            if (company) {
-                res.json(company);
+            const answer = await this._answerRepository.getAnswerById(answerId);
+            if (answer) {
+                res.json(answer);
             } else {
                 res.status(404).send({
                     success: false,
-                    message: `Company not found.`
+                    message: `Answer not found.`
                 });
             }
         } catch (error) {
@@ -107,20 +106,20 @@ export class CompaniesController extends BaseController {
     }
     /**
      * @swagger
-     * /api/companies:
+     * /api/answers:
      *   post:
-     *     summary: Create new company
-     *     description: Create new company
+     *     summary: Create new answer
+     *     description: Create new answer
      *     produces:
      *       - application/json
      *     tags:
-     *       - Companies
+     *       - Answers
      *     parameters:
-     *       - name: Company
+     *       - name: Answer
      *         in: body
      *         description: The pet JSON you want to post
      *         schema:
-     *           $ref: '#/definitions/Company'
+     *           $ref: '#/definitions/Answer'
      *     responses:
      *       200:
      *         description: Created
@@ -129,15 +128,15 @@ export class CompaniesController extends BaseController {
      *
      */
     @httpPost('/')
-    public async createCompany(@request() req: express.Request, @response() res: express.Response) {
-        const newCompany: Company = req.body;
+    public async createAnswer(@request() req: express.Request, @response() res: express.Response) {
+        const newAnswer: Answer = req.body;
         try {
-            const createdUser = await this._companyRepository.create(newCompany);
+            const createdUser = await this._answerRepository.create(newAnswer);
             if (createdUser) {
                 res.status(200).send({
                     success: true,
-                    message: 'Company created',
-                    company: createdUser
+                    message: 'Answer created',
+                    answer: createdUser
                 });
             }
         } catch (errors) {
@@ -150,24 +149,24 @@ export class CompaniesController extends BaseController {
 
     /**
    * @swagger
-   * /api/companies/{companyId}:
+   * /api/answers/{answerId}:
    *   put:
-   *     summary: Update Company
-   *     description: Update Company
+   *     summary: Update Answer
+   *     description: Update Answer
    *     produces:
    *       - application/json
    *     tags:
-   *       - Companies
+   *       - Answers
    *     parameters:
-   *       - name: companyId
+   *       - name: answerId
    *         in: path
    *         required: true
    *         type: string
-   *       - name: Company
+   *       - name: Answer
    *         in: body
    *         description: The pet JSON you want to post
    *         schema:
-   *           $ref: '#/definitions/Company'
+   *           $ref: '#/definitions/Answer'
    *     responses:
    *       200:
    *         description: Updated
@@ -175,19 +174,19 @@ export class CompaniesController extends BaseController {
    *         description: Server error
    *
    */
-    @httpPut('/:companyId')
-    public async updateCompany(
-        @requestParam('companyId') companyId: string,
+    @httpPut('/:answerId')
+    public async updateAnswer(
+        @requestParam('answerId') answerId: string,
         @request() req: express.Request,
         @response() res: express.Response) {
-        const updateCompany: Company = req.body;
+        const updateAnswer: Answer = req.body;
 
         try {
-            const company = await this._companyRepository.update(updateCompany, Number(companyId));
+            const answer = await this._answerRepository.update(updateAnswer, Number(answerId));
             res.status(200).send({
                 success: true,
-                message: 'company updated',
-                company: company
+                message: 'answer updated',
+                answer: answer
             });
         } catch (error) {
             res.status(500).send({
@@ -200,16 +199,16 @@ export class CompaniesController extends BaseController {
 
     /**
      * @swagger
-     * /api/companies/{companyId}:
+     * /api/answers/{answerId}:
      *   delete:
-     *     summary: Deletes company
-     *     description: Deletes a company by id, and all accosiated records
+     *     summary: Deletes answer
+     *     description: Deletes a answer by id, and all accosiated records
      *     produces:
      *       - application/json
      *     tags:
-     *       - Companies
+     *       - Answers
      *     parameters:
-     *       - name: companyId
+     *       - name: answerId
      *         in: path
      *         required: true
      *         type: integer
@@ -220,16 +219,16 @@ export class CompaniesController extends BaseController {
      *         description: Server error
      *
      */
-    @httpDelete('/:companyId')
-    public async deleteCompany(
-        @requestParam('companyId') companyId: string,
+    @httpDelete('/:answerId')
+    public async deleteAnswer(
+        @requestParam('answerId') answerId: string,
         @request() req: express.Request,
         @response() res: express.Response) {
-        this._companyRepository.delete(companyId).then((effected: Number) => {
+        this._answerRepository.delete(answerId).then((effected: Number) => {
             if (effected) {
                 res.status(200).send({
                     success: true,
-                    message: 'Company deleted.'
+                    message: 'Answer deleted.'
                 });
             } else {
                 res.status(400).send({
@@ -240,7 +239,7 @@ export class CompaniesController extends BaseController {
         }).catch((err: Error) => {
             res.status(500).send({
                 success: false,
-                message: `company ${companyId} cannot be deleted : ${err}`
+                message: `answer ${answerId} cannot be deleted : ${err}`
             });
         });
     }
